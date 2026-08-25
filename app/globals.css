@@ -1,0 +1,439 @@
+@import "tailwindcss";
+
+/* ============================================================
+   DESIGN SYSTEM — "Verdict"
+   AdSense Eligibility Checker
+   ------------------------------------------------------------
+   Palette : deep blue-black ink + azure→iris→orchid gradient
+   Semantic: mint (pass) / amber (warn) / rose (fail)
+   Type    : Bricolage Grotesque (display) · Inter Tight (body)
+             JetBrains Mono (data, URLs, labels)
+
+   Layering matters here: every custom class below lives in
+   @layer base or @layer components so plain utilities
+   (hover:border-*, text-*) still win over them.
+   ============================================================ */
+
+@theme {
+  /* --- surface ink ------------------------------------------------ */
+  --color-ink-950: #07080f;
+  --color-ink-900: #0a0c16;
+  --color-ink-850: #0e1120;
+  --color-ink-800: #141831;
+  --color-ink-700: #1d2243;
+
+  /* --- brand gradient stops -------------------------------------- */
+  --color-azure-300: #9ab4ff;
+  --color-azure-400: #6f97ff;
+  --color-azure-500: #4f7dff;
+  --color-azure-600: #3862e8;
+  --color-iris-400: #9b80ff;
+  --color-iris-500: #7c5cff;
+  --color-iris-600: #6440e0;
+  --color-orchid-400: #c684ff;
+  --color-orchid-500: #b45cff;
+
+  /* --- semantic verdict ------------------------------------------ */
+  --color-mint-400: #34d399;
+  --color-amber-400: #fbbf24;
+  --color-rose-400: #fb7185;
+
+  /* --- text ------------------------------------------------------ */
+  --color-cloud-50: #edeff7;
+  --color-cloud-200: #c3c8dd;
+  --color-cloud-400: #8c93b4;
+  --color-cloud-600: #5a6088;
+
+  /* --- type ------------------------------------------------------ */
+  --font-display: var(--font-bricolage), "Bricolage Grotesque", ui-sans-serif,
+    system-ui, sans-serif;
+  --font-sans: var(--font-inter-tight), "Inter Tight", ui-sans-serif, system-ui,
+    sans-serif;
+  --font-mono: var(--font-jetbrains), "JetBrains Mono", ui-monospace,
+    SFMono-Regular, monospace;
+}
+
+/* ============================================================
+   BASE
+   ============================================================ */
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    border-color: color-mix(in oklab, var(--color-cloud-400) 12%, transparent);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-ink-950);
+    color: var(--color-cloud-50);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: color-mix(in oklab, var(--color-iris-500) 45%, transparent);
+    color: #fff;
+  }
+
+  /* Visible, on-brand keyboard focus — never removed. */
+  :focus-visible {
+    outline: 2px solid var(--color-azure-400);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+
+  /* Slim scrollbar so the dark canvas stays uninterrupted. */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-ink-950);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-ink-700);
+    border-radius: 99px;
+    border: 3px solid var(--color-ink-950);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-iris-600);
+  }
+}
+
+@layer components {
+  /* ==========================================================
+     TYPE PRIMITIVES
+     ========================================================== */
+
+  .t-display {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: -0.032em;
+    line-height: 0.96;
+  }
+
+  .t-h1 {
+    font-size: clamp(2.6rem, 6.2vw, 5.1rem);
+  }
+
+  .t-h2 {
+    font-size: clamp(2rem, 4vw, 3.35rem);
+    letter-spacing: -0.028em;
+    line-height: 1.02;
+  }
+
+  .t-h3 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(1.15rem, 1.6vw, 1.4rem);
+    letter-spacing: -0.018em;
+    line-height: 1.2;
+  }
+
+  .t-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .t-body {
+    font-size: 1.0625rem;
+    line-height: 1.62;
+    color: var(--color-cloud-400);
+  }
+
+  .t-data {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
+  }
+
+  /* ==========================================================
+     GRADIENT + GLASS
+     ========================================================== */
+
+  .grad-text {
+    background-image: linear-gradient(
+      104deg,
+      var(--color-azure-300) 0%,
+      var(--color-azure-400) 26%,
+      var(--color-iris-400) 58%,
+      var(--color-orchid-400) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    /* keeps descenders from clipping on tight display leading */
+    padding-bottom: 0.06em;
+  }
+
+  .grad-brand {
+    background-image: linear-gradient(
+      120deg,
+      var(--color-azure-500) 0%,
+      var(--color-iris-500) 52%,
+      var(--color-orchid-500) 100%
+    );
+  }
+
+  /* Subtle glass: a top-lit panel, not a frosted slab. */
+  .glass {
+    background-image: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.055),
+      rgba(255, 255, 255, 0.018) 42%,
+      rgba(255, 255, 255, 0.008)
+    );
+    background-color: color-mix(in oklab, var(--color-ink-900) 82%, transparent);
+    backdrop-filter: blur(18px) saturate(130%);
+    -webkit-backdrop-filter: blur(18px) saturate(130%);
+    border: 1px solid rgba(255, 255, 255, 0.075);
+  }
+
+  /* No border here on purpose — consumers add the edge they need
+     (the navbar wants border-b only, not a hairline box). */
+  .glass-deep {
+    background-color: color-mix(in oklab, var(--color-ink-950) 88%, transparent);
+    backdrop-filter: blur(24px) saturate(120%);
+    -webkit-backdrop-filter: blur(24px) saturate(120%);
+  }
+
+  /* 1px gradient hairline border via mask composite. */
+  .grad-hairline {
+    position: relative;
+  }
+  .grad-hairline::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(
+      140deg,
+      rgba(111, 151, 255, 0.55),
+      rgba(124, 92, 255, 0.22) 40%,
+      rgba(255, 255, 255, 0.04) 70%
+    );
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  /* Interior highlight along the top edge of a panel. */
+  .edge-light::before {
+    content: "";
+    position: absolute;
+    inset-inline: 12%;
+    top: 0;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(154, 180, 255, 0.55),
+      transparent
+    );
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* ==========================================================
+     FIELD / ATMOSPHERE
+     ========================================================== */
+
+  /* Fine dot lattice, faded radially — reads as a measurement field. */
+  .dot-field {
+    background-image: radial-gradient(
+      circle at center,
+      rgba(140, 147, 180, 0.22) 1px,
+      transparent 1px
+    );
+    background-size: 26px 26px;
+    -webkit-mask-image: radial-gradient(
+      ellipse 78% 62% at 50% 30%,
+      #000 0%,
+      transparent 72%
+    );
+    mask-image: radial-gradient(
+      ellipse 78% 62% at 50% 30%,
+      #000 0%,
+      transparent 72%
+    );
+  }
+
+  .noise {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.34'/%3E%3C/svg%3E");
+    mix-blend-mode: overlay;
+  }
+
+  /* ==========================================================
+     SIGNATURE: the scan sweep
+     A single thin gradient line travelling down a panel — the
+     product's own gesture. Used on the hero card + on re-scan.
+     ========================================================== */
+
+  .scan-sweep {
+    position: absolute;
+    inset-inline: 0;
+    top: 0;
+    height: 38px;
+    pointer-events: none;
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      rgba(111, 151, 255, 0.11) 55%,
+      rgba(154, 180, 255, 0.5) 96%,
+      rgba(198, 132, 255, 0.85) 100%
+    );
+    animation: sweep-down 2.1s cubic-bezier(0.32, 0.72, 0, 1) forwards;
+  }
+
+  .drift-slow {
+    animation: drift 22s ease-in-out infinite;
+  }
+  .drift-slower {
+    animation: drift 34s ease-in-out infinite reverse;
+  }
+
+  .pulse-ring {
+    animation: pulse-ring 2.6s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+  }
+}
+
+/* ============================================================
+   KEYFRAMES
+   ============================================================ */
+
+@keyframes sweep-down {
+  0% {
+    transform: translateY(-8%);
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+  }
+  88% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(760%);
+    opacity: 0;
+  }
+}
+
+@keyframes drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(2%, -3%, 0) scale(1.06);
+  }
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.65;
+  }
+  70% {
+    transform: scale(1.55);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.55);
+    opacity: 0;
+  }
+}
+
+/* ============================================================
+   REDUCED MOTION — honour it everywhere.
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .scan-sweep {
+    display: none;
+  }
+}
+
+/* ===========rotating left to right logo ============= */
+@keyframes platform-marquee {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-platform-marquee {
+  animation: platform-marquee 30s linear infinite;
+  will-change: transform;
+}
+
+@keyframes scanner-line {
+  0% {
+    left: -25%;
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  90% {
+    opacity: 1;
+  }
+
+  100% {
+    left: 110%;
+    opacity: 0;
+  }
+}
+
+.animate-scanner-line {
+  animation: scanner-line 4s linear infinite;
+}
+
+@keyframes scan-bars {
+  0%,
+  100% {
+    transform: scaleY(0.35);
+    opacity: 0.35;
+  }
+
+  50% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
+.animate-scan-bars {
+  animation: scan-bars 1.4s ease-in-out infinite;
+}
