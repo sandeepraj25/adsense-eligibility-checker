@@ -1,33 +1,33 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Container } from "@/components/ui/Container";
-import { Logomark, Wordmark } from "@/components/illustrations/Logomark";
 
 const columns = [
   {
     heading: "Product",
     links: [
-      { label: "How it works", href: "#process" },
-      { label: "What gets checked", href: "#features" },
-      { label: "Sample report", href: "#report" },
-      { label: "Pricing", href: "#top" },
+      { label: "How it works", href: "/#process" },
+      { label: "What gets checked", href: "/#features" },
+      { label: "Sample report", href: "/#approval-gallery" },
+      { label: "Pricing", href: "/pricing" },
     ],
   },
   {
     heading: "Resources",
     links: [
-      { label: "Rejection reasons", href: "#features" },
-      { label: "Required pages guide", href: "#features" },
-      { label: "ads.txt reference", href: "#features" },
-      { label: "Changelog", href: "#top" },
+      { label: "Rejection reasons", href: "/#features" },
+      { label: "Required pages guide", href: "/#features" },
+      { label: "ads.txt reference", href: "/#features" },
+      { label: "Changelog", href: "/#top" },
     ],
   },
   {
     heading: "Company",
     links: [
-      { label: "About", href: "#top" },
-      { label: "Contact", href: "#top" },
-      { label: "Privacy", href: "#top" },
-      { label: "Terms", href: "#top" },
+      { label: "About", href: "/#top" },
+      { label: "Contact", href: "/#top" },
+      { label: "Privacy", href: "/#top" },
+      { label: "Terms", href: "/#top" },
     ],
   },
 ];
@@ -38,9 +38,13 @@ export function Footer() {
       <Container size="wide">
         <div className="grid gap-12 py-14 lg:grid-cols-[1.4fr_repeat(3,1fr)]">
           <div>
-            <Link href="#top" className="flex items-center gap-2.5">
-              <Logomark size={30} />
-              <Wordmark />
+            <Link href="#top" className="inline-flex items-center">
+              <Image
+                src="/logo.png"
+                alt="Logo"
+                width={306}
+                height={306}
+              />
             </Link>
 
             <p className="mt-5 max-w-sm text-[1.0625rem] leading-relaxed text-cloud-300">
@@ -73,7 +77,7 @@ export function Footer() {
 
         <div className="flex flex-col gap-4 border-t border-white/[0.06] py-7 sm:flex-row sm:items-center sm:justify-between">
           <p className="t-data text-[0.875rem] text-cloud-600">
-            © {new Date().getFullYear()} Verdict
+            © {new Date().getFullYear()} All Rights Reserved.
           </p>
 
           <p className="t-data text-[0.875rem] text-cloud-600">

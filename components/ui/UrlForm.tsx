@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { ArrowRight, Globe, Loader2 } from "lucide-react";
 import { useScan } from "@/components/ScanContext";
 import { normalizeDomain } from "@/lib/domain";
@@ -16,6 +17,7 @@ export function UrlForm({
   cta?: string;
 }) {
   const { runScan } = useScan();
+  const router = useRouter();
   const [value, setValue] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
@@ -36,14 +38,12 @@ export function UrlForm({
     setError(null);
     setBusy(true);
 
-    window.setTimeout(() => {
-      runScan(domain);
-      setBusy(false);
-
-      document
-        .getElementById("report")
-        ?.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 1100);
+    // Keeps any on-page preview in sync, then hands off to /start, which
+    // decides where this visitor goes: signup if anonymous, straight to
+    // the checker if they already have a session and an active plan.
+    // `busy` is intentionally left true — the page is being replaced.
+    runScan(domain);
+    router.push(`/start?url=${encodeURIComponent(domain)}`);
   }
 
   return (

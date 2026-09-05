@@ -1,5 +1,9 @@
 import type { Metadata, Viewport } from "next";
-import { Bricolage_Grotesque, Inter, JetBrains_Mono } from "next/font/google";
+import {
+  Bricolage_Grotesque,
+  Inter,
+  JetBrains_Mono,
+} from "next/font/google";
 import "./globals.css";
 
 const bricolage = Bricolage_Grotesque({
@@ -21,9 +25,24 @@ const jetbrains = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Verdict — Know your AdSense answer before you apply",
+  title: {
+    default: "AdSense Check",
+    template: "%s | AdSense Check",
+  },
+
   description:
-    "Paste your URL and run the 34 checks Google's reviewers apply. Get a score, the blockers, and the exact fix for each one.",
+    "Check your website's AdSense readiness before you apply. Get detailed insights, blockers, and actionable fixes.",
+
+  icons: {
+    icon: [
+      {
+        url: "/favicon.png",
+        type: "image/png",
+      },
+    ],
+    shortcut: "/favicon.png",
+    apple: "/favicon.png",
+  },
 };
 
 export const viewport: Viewport = {
@@ -41,7 +60,9 @@ export default function RootLayout({
       lang="en"
       className={`${bricolage.variable} ${inter.variable} ${jetbrains.variable}`}
     >
-      <body className="bg-ink-950 text-cloud-50 antialiased">{children}</body>
+      <body className="bg-ink-950 text-cloud-50 antialiased">
+        {children}
+      </body>
     </html>
   );
 }

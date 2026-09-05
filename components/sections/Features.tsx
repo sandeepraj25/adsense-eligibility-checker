@@ -74,7 +74,7 @@ const scanSteps = [
       { text: "Ad placement looks safe", type: "pass" },
     ],
   },
-];
+] as const;
 
 const statusStyles = {
   pass: {

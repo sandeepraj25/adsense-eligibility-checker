@@ -2,24 +2,21 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
-import {
-  Logomark,
-  Wordmark,
-} from "@/components/illustrations/Logomark";
 import { cn } from "@/lib/cn";
 
 const links = [
-  { label: "Home", href: "#top" },
-  { label: "How it works", href: "#process" },
-  { label: "Pricing", href: "#pricing" },
-  { label: "Tools", href: "#tools" },
-  { label: "Team", href: "#team" },
-  { label: "Success Stories", href: "#report" },
+  { label: "Home", href: "/" },
+  { label: "How it works", href: "/#process" },
+  { label: "Pricing", href: "/pricing" },
+  { label: "Tools", href: "/#tools" },
+  { label: "Team", href: "/team" },
+  { label: "Success Stories", href: "/#report" },
 ];
 
 export function Navbar() {
@@ -91,14 +88,18 @@ export function Navbar() {
           {/* Logo */}
           <Link
             href="#top"
-            className="group flex shrink-0 items-center gap-3"
+            className="group flex shrink-0 items-center"
             aria-label="Home"
           >
             <span className="transition-transform duration-300 group-hover:scale-105">
-              <Logomark size={32} />
+              <Image
+                src="/logo.png"
+                alt="Logo"
+                width={206}
+                height={206}
+                priority
+              />
             </span>
-
-            <Wordmark />
           </Link>
 
           {/* Desktop Navigation */}
@@ -124,7 +125,7 @@ export function Navbar() {
           {/* Desktop Actions */}
           <div className="hidden shrink-0 items-center gap-2 md:flex">
             <Link
-              href="#login"
+              href="/login"
               className="cursor-pointer rounded-xl px-4 py-2.5 text-[1rem] font-medium text-white transition-all duration-300 hover:bg-white/[0.06]"
             >
               Log in
@@ -183,7 +184,7 @@ export function Navbar() {
                 ))}
 
                 <Link
-                  href="#login"
+                  href="/login"
                   onClick={() => setOpen(false)}
                   className="cursor-pointer rounded-xl px-4 py-3.5 text-[1rem] font-medium text-white transition-colors hover:bg-white/[0.08]"
                 >
